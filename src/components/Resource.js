@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import Button from 'react-bootstrap/Button';
 import MachineList from './MachineList';
-import MyProvider from './components/MyContext';
-import MyContext from './components/MyContext';
 
 class Resource extends Component {
 
@@ -33,14 +31,12 @@ class Resource extends Component {
   render() {
     return (
       <div className="resource-frag">
-        <MyProvider>
           <Button className='resource-btn' variant={this.props.color} onClick={() => this.addResource(1)}>
               {this.props.name}
               <span className="badge badge-light stock-badge" id="stone-span">{this.state.stock}</span>
           </Button>
 
           <MachineList type={this.props.name} stock={this.state.stock} mining={this.mining} addResource={this.addResource}/>
-        </MyProvider>
       </div>
     )
   }

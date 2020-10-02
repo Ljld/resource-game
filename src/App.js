@@ -2,7 +2,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {Component} from 'react';
 import Resource from './components/Resource';
 import './App.css';
-import MyProvider from './components/MyContext';
 
 class App extends Component {
 
@@ -22,7 +21,7 @@ class App extends Component {
               <Resource stock='8' resource='food' name='Food ' color='danger'/>
               <Resource stock='12' resource='wood' name='Wood ' color ='warning'/>
             </div>
-          
+
         </header>
       </div>
     );
