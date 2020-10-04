@@ -1,45 +1,54 @@
-import React, {Component} from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import MachineList from './MachineList';
+import {StoneContext, FoodContext, WoodContext} from './MyContexts.js'
 
-class Resource extends Component {
+const Resource = ({name, resource, color}) => {
 
-  state = {
-    stock: 8
-  }
+  const [stock, setStock] = useState(8);
 
-  mining = (amount) => {
+  useEffect(() => {
+    switch (resource) {
+      case 'stone':
+        localStorage.setItem('stone-stock', stock);
+        localStorage.getItem('stone-stock');
+        break;
+      case 'food':
+        localStorage.setItem('food-stock', stock);
+        localStorage.getItem('food-stock');
+        break;
+      case 'wood':
+        localStorage.setItem('wood-stock', stock);
+        localStorage.getItem('wood-stock');
+        break;
+
+      default:
+        console.log("ça marche pas");
+        break;
+    }
+
+  }, [stock]);
+
+
+  /*mining = (amount) => {
     setInterval(() => {
-      this.setState({
-        stock : this.state.stock + amount
-      })
+      setStock(stock + amount);
     }, 1000);
+  }*/
 
+  return (
+    <div className="resource-frag">
+      <Button className='resource-btn' variant={color} onClick={() => setStock(stock + 10)}>
+          {name}
+          <span className="badge badge-light stock-badge" id="stone-span">{stock}</span>
+      </Button>
 
-  }
+      <StoneContext.Provider value={stock}>
+        <MachineList type={resource} stock={stock} setStock={setStock}/>
+      </StoneContext.Provider>
+    </div>
+  )
 
-  addResource = (amount) => {
-    this.setState({
-      stock : this.state.stock + amount
-    })
-  }
-
-  componentDidUpdate() {
-
-  }
-
-  render() {
-    return (
-      <div className="resource-frag">
-          <Button className='resource-btn' variant={this.props.color} onClick={() => this.addResource(1)}>
-              {this.props.name}
-              <span className="badge badge-light stock-badge" id="stone-span">{this.state.stock}</span>
-          </Button>
-
-          <MachineList type={this.props.name} stock={this.state.stock} mining={this.mining} addResource={this.addResource}/>
-      </div>
-    )
-  }
 }
 
 export default Resource;

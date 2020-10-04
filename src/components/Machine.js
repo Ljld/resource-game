@@ -1,28 +1,55 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import Button from 'react-bootstrap/Button';
 import Badge from 'react-bootstrap/Badge';
+import {StoneContext} from './MyContexts';
 
-class Machine extends Component {
+const Machine = ({type, tier}) => {
 
-  componentDidMount() {
-    if (this.props.type === 'Stone ') {
-      //this.props.mining(this.props.tier.speed);
-      console.log('boo');
+  const [activity, setActivity] = useState(false);
+
+  /*useEffect(() => {
+    switch (type) {
+      case 'stone':
+        localStorage.setItem('stone-stock', stock);
+        break;
+      case 'food':
+        localStorage.setItem('food-stock', stock);
+        break;
+      case 'wood':
+        localStorage.setItem('wood-stock', stock);
+        break;
+
+      default:
+        console.log("ça marche pas");
+        break;
     }
-  };
+
+  }, [stock]);*/
+
+  /*function handleCraft () {
+    return
+  }*/
+
+  /*mining = (amount) => {
+    setInterval(() => {
+      setStock(stock + amount);
+    }, 1000);
+  }*/
 
 
-  render() {
-    return (
-      <div className="machine">
-        <p>
-        Machine {this.props.tier.name}
-        <Button className='craft-btn' onClick={() => this.props.addResource(-5)}>Craft</Button>
-        <Badge className='cost-badge' variant="secondary">{this.props.tier.cost.stone}</Badge>
-        <Badge className='cost-badge' variant="warning">{this.props.tier.cost.wood}</Badge>
-        </p>
-      </div>
-    )
-  }
+
+  let stock = useContext(StoneContext);
+
+  return (
+    <div className="machine">
+      <p>
+        Machine {tier.name}
+        {!activity && <Button className='craft-btn' onClick={() => setActivity(true)}>Craft</Button>}
+        {!activity && <Badge className='cost-badge' variant="secondary">{tier.cost.stone}</Badge>}
+        {!activity && <Badge className='cost-badge' variant="warning">{tier.cost.wood}</Badge>}
+
+      </p>
+    </div>
+  )
 }
  export default Machine;
