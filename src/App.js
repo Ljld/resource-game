@@ -1,17 +1,24 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import React from 'react';
-import Resource from './components/Resource';
-import './App.css';
-import useObjState from './hooks/useObjState';
-import {GlobalStockContext} from './components/MyContexts';
+import "bootstrap/dist/css/bootstrap.min.css";
+import React from "react";
+import "./App.css";
+import useObjState from "./hooks/useObjState";
+import { GlobalStockContext } from "./components/MyContexts";
+import ResourceStone from "./components/Ressource/ResourceStone";
+import RessourceFood from "./components/Ressource/ResourceFood";
+import RessourceWood from "./components/Ressource/ResourceWood";
+import createPersistedState from "@plq/use-persisted-state";
+import storage from "@plq/use-persisted-state/lib/storages/local-storage";
 
+export const [usePersistedState] = createPersistedState(
+  "stockRessource",
+  storage
+);
 
 const App = () => {
-
   const [globalStock] = useObjState({
-    stone: localStorage.getItem('stone-stock'),
-    food: localStorage.getItem('food-stock'),
-    wood: localStorage.getItem('wood-stock')
+    stone: localStorage.getItem("stone-stock"),
+    food: localStorage.getItem("food-stock"),
+    wood: localStorage.getItem("wood-stock"),
   });
 
   return (
@@ -20,16 +27,18 @@ const App = () => {
         <h1>My Resource Game</h1>
         <div className="resource-bar">
           <GlobalStockContext.Provider value={globalStock}>
-            <Resource resource={'stone'} name={'Stone '} color={'secondary'}/>
-            <Resource resource={'food'} name={'Food '} color={'danger'}/>
-            <Resource resource={'wood'} name={'Wood '} color={'warning'}/>
+            <ResourceStone
+              resource={"stone"}
+              name={"Stone "}
+              color={"secondary"}
+            />
+            <RessourceFood resource={"food"} name={"Food "} color={"danger"} />
+            <RessourceWood resource={"wood"} name={"Wood "} color={"warning"} />
           </GlobalStockContext.Provider>
         </div>
       </header>
     </div>
   );
-
-
-}
+};
 
 export default App;
