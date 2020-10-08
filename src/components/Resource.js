@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import MachineList from './MachineList';
-import {StoneContext, FoodContext, WoodContext} from './MyContexts.js'
+import {StoneContext} from './MyContexts.js'
 
 const Resource = ({name, resource, color}) => {
 
-  const [stock, setStock] = useState(8);
+  const [thisStock, setThisStock] = useState(8);
 
   useEffect(() => {
     switch (resource) {
       case 'stone':
-        localStorage.setItem('stone-stock', stock);
+        localStorage.setItem('stone-stock', thisStock);
         localStorage.getItem('stone-stock');
         break;
       case 'food':
-        localStorage.setItem('food-stock', stock);
+        localStorage.setItem('food-stock', thisStock);
         localStorage.getItem('food-stock');
         break;
       case 'wood':
-        localStorage.setItem('wood-stock', stock);
+        localStorage.setItem('wood-stock', thisStock);
         localStorage.getItem('wood-stock');
         break;
 
@@ -27,7 +27,7 @@ const Resource = ({name, resource, color}) => {
         break;
     }
 
-  }, [stock]);
+  }, [thisStock, resource]);
 
 
   /*mining = (amount) => {
@@ -38,13 +38,13 @@ const Resource = ({name, resource, color}) => {
 
   return (
     <div className="resource-frag">
-      <Button className='resource-btn' variant={color} onClick={() => setStock(stock + 10)}>
+      <Button className='resource-btn' variant={color} onClick={() => setThisStock(thisStock + 10)}>
           {name}
-          <span className="badge badge-light stock-badge" id="stone-span">{stock}</span>
+          <span className="badge badge-light stock-badge" id="stone-span">{thisStock}</span>
       </Button>
 
-      <StoneContext.Provider value={stock}>
-        <MachineList type={resource} stock={stock} setStock={setStock}/>
+      <StoneContext.Provider value={thisStock}>
+        <MachineList type={resource} stock={thisStock} setStock={setThisStock}/>
       </StoneContext.Provider>
     </div>
   )

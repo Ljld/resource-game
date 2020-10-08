@@ -1,7 +1,7 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import Badge from 'react-bootstrap/Badge';
-import {StoneContext} from './MyContexts';
+//import {StoneContext} from './MyContexts';
 
 const Machine = ({type, tier}) => {
 
@@ -38,7 +38,7 @@ const Machine = ({type, tier}) => {
 
 
 
-  let stock = useContext(StoneContext);
+//  let stock = useContext(StoneContext);
 
   return (
     <div className="machine">
