@@ -4,13 +4,8 @@ import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 import Machine from "./Machine";
 import useObjState from "../hooks/useObjState";
-import { usePersistedState } from "../App";
 
 const MachineList = ({ type }) => {
-  const [food] = usePersistedState("stockFood");
-  const [wood] = usePersistedState("stockWood");
-  const [stone] = usePersistedState("stockStone");
-  //  const stockObj = useContext(GlobalStockContext);
 
   const [tier1] = useObjState({
     name: "T1",
@@ -39,19 +34,6 @@ const MachineList = ({ type }) => {
     },
   });
 
-  /*let stockInfo = (tier) => {
-    let stoneStock = localStorage.getItem('stone-stock');
-    let woodStock = localStorage.getItem('wood-stock');
-
-    if (stoneStock < tier.cost.stone || woodStock < tier.cost.wood) {
-      //console.log("Stone: "+stoneStock);
-      //console.log(tier.cost.stone);
-      return "disabled";
-    }
-    else {
-      return "";
-    }
-  };*/
   return (
     <div className="machine-card">
       <Card bg="secondary" text="dark">
@@ -60,19 +42,13 @@ const MachineList = ({ type }) => {
         </Card.Header>
 
         <ListGroup variant="flush">
-          <ListGroup.Item
-            className={stone >= 10 && wood >= 10 ? "" : "disabled"}
-          >
+          <ListGroup.Item>
             <Machine type={type} tier={tier1} />
           </ListGroup.Item>
-          <ListGroup.Item
-            className={stone >= 100 && wood >= 100 ? "" : "disabled"}
-          >
+          <ListGroup.Item>
             <Machine type={type} tier={tier2} />
           </ListGroup.Item>
-          <ListGroup.Item
-            className={stone >= 1000 && wood >= 1000 ? "" : "disabled"}
-          >
+          <ListGroup.Item>
             <Machine type={type} tier={tier3} />
           </ListGroup.Item>
         </ListGroup>

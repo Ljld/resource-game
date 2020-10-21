@@ -1,33 +1,24 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import MachineList from "../MachineList";
-import { StoneContext } from "../MyContexts.js";
 import { usePersistedState } from "../../App";
 
-const ResourceWood = ({ name, resource, color }) => {
-  const [count, setCount] = usePersistedState("stockWood", 0);
+const ResourceWood = () => {
+  const [woodStock, setWoodStock] = usePersistedState("wood-stock", 0);
   const increment = () => {
-    setCount((prevCount) => prevCount + 1);
+    setWoodStock(woodStock + 1);
   };
-
-  /*mining = (amount) => {
-    setInterval(() => {
-      setStock(stock + amount);
-    }, 1000);
-  }*/
 
   return (
     <div className="resource-frag">
-      <Button className="resource-btn" variant={color} onClick={increment}>
-        {name}
+      <Button className="resource-btn" variant='warning' onClick={increment}>
+        Wood&nbsp;
         <span className="badge badge-light stock-badge" id="stone-span">
-          {count}
+          {woodStock}
         </span>
       </Button>
 
-      <StoneContext.Provider value={count}>
-        <MachineList type={resource} stock={count} setStock={increment} />
-      </StoneContext.Provider>
+      <MachineList type='Wood'/>
     </div>
   );
 };

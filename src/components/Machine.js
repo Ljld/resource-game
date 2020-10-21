@@ -1,50 +1,40 @@
 import React, {useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import Badge from 'react-bootstrap/Badge';
-//import {StoneContext} from './MyContexts';
+import { usePersistedState } from "../App";
 
 const Machine = ({type, tier}) => {
 
   const [activity, setActivity] = useState(false);
 
-  /*useEffect(() => {
-    switch (type) {
-      case 'stone':
-        localStorage.setItem('stone-stock', stock);
-        break;
-      case 'food':
-        localStorage.setItem('food-stock', stock);
-        break;
-      case 'wood':
-        localStorage.setItem('wood-stock', stock);
-        break;
+  const [stone, setStoneStock] = usePersistedState("stone-stock");
+  const [food, setFoodStock] = usePersistedState("food-stock");
+  const [wood, setWoodStock] = usePersistedState("wood-stock");
+  
+  const handleCraft = () => {
+    setActivity(true);
+    setStoneStock((prevCount) => prevCount - tier.cost.stone);
+    setWoodStock((prevCount) => prevCount - tier.cost.wood);
+  }
 
-      default:
-        console.log("ça marche pas");
-        break;
+  const handleMining = () => {
+    if (type === 'Stone') {
+      setStoneStock(stone + tier.cost.stone);
     }
-
-  }, [stock]);*/
-
-  /*function handleCraft () {
-    return
-  }*/
-
-  /*mining = (amount) => {
-    setInterval(() => {
-      setStock(stock + amount);
-    }, 1000);
-  }*/
-
-
-
-//  let stock = useContext(StoneContext);
+    else if (type === 'Food') {
+      setFoodStock(food + tier.cost.stone);
+    }
+    else if (type === 'Wood') {
+      setWoodStock(wood + tier.cost.stone);
+    }
+  }
 
   return (
     <div className="machine">
       <p>
         Machine {tier.name}
-        {!activity && <Button className='craft-btn' onClick={() => setActivity(true)}>Craft</Button>}
+        {activity && <Button className='craft-btn' onClick={handleMining}> + {tier.cost.stone}</Button>}
+        {!activity && <Button className={stone >= tier.cost.stone && wood >= tier.cost.wood ? "craft-btn" : "craft-btn disabled"} onClick={handleCraft}>Craft</Button>}
         {!activity && <Badge className='cost-badge' variant="secondary">{tier.cost.stone}</Badge>}
         {!activity && <Badge className='cost-badge' variant="warning">{tier.cost.wood}</Badge>}
 
