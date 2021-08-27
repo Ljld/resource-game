@@ -12,9 +12,12 @@ const Machine = ({type, tier}) => {
   const [wood, setWoodStock] = usePersistedState("wood-stock");
   
   const handleCraft = () => {
-    setActivity(true);
-    setStoneStock((prevCount) => prevCount - tier.cost.stone);
-    setWoodStock((prevCount) => prevCount - tier.cost.wood);
+    if (stone >= tier.cost.stone && wood >= tier.cost.wood) {
+      setActivity(true);
+      setStoneStock((prevCount) => prevCount - tier.cost.stone);
+      setWoodStock((prevCount) => prevCount - tier.cost.wood);
+    }
+    
   }
 
   const handleMining = () => {
@@ -22,7 +25,12 @@ const Machine = ({type, tier}) => {
       setStoneStock(stone + tier.cost.stone);
     }
     else if (type === 'Food') {
-      setFoodStock(food + tier.cost.stone);
+      if (food >= 1) {
+        setFoodStock(food + tier.cost.stone);
+      }
+      else {
+        setFoodStock(tier.cost.stone);
+      }
     }
     else if (type === 'Wood') {
       setWoodStock(wood + tier.cost.stone);

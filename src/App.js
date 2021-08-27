@@ -6,6 +6,7 @@ import RessourceFood from "./components/Ressource/ResourceFood";
 import RessourceWood from "./components/Ressource/ResourceWood";
 import createPersistedState from "@plq/use-persisted-state";
 import storage from "@plq/use-persisted-state/lib/storages/local-storage";
+import ResetBtn from "./components/ResetBtn";
 
 export const [usePersistedState] = createPersistedState(
   "stockRessource",
@@ -23,6 +24,7 @@ const App = () => {
             <RessourceFood resource={"food"} name={"Food "} color={"danger"} />
             <RessourceWood resource={"wood"} name={"Wood "} color={"warning"} />
         </div>
+        <ResetBtn></ResetBtn>
       </header>
     </div>
   );
